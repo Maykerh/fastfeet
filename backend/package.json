@@ -1,0 +1,24 @@
+{
+    "name": "backend",
+    "version": "1.0.0",
+    "main": "app.js",
+    "author": "Mayke Herbst",
+    "license": "MIT",
+    "scripts": {
+        "dev": "nodemon src/server.js"
+    },
+    "dependencies": {
+        "cors": "^2.8.5",
+        "eslint-config-airbnb-base": "^14.0.0",
+        "eslint-config-prettier": "^6.7.0",
+        "eslint-plugin-import": "^2.19.1",
+        "eslint-plugin-prettier": "^3.1.1",
+        "express": "^4.17.1",
+        "nodemon": "^2.0.2",
+        "prettier": "^1.19.1",
+        "sucrase": "^3.10.1"
+    },
+    "devDependencies": {
+        "eslint": "^6.7.2"
+    }
+}
