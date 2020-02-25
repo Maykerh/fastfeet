@@ -1,4 +1,6 @@
 node_modules
 src/config/*
-public/*
+tmp/*
 .env
+yarn-error.log
+start.txt
