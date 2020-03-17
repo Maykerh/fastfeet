@@ -31,9 +31,7 @@ class DeliverymanController {
         });
 
         if (!(await schema.isValid(req.body))) {
-            return res
-                .status(400)
-                .json({ error: "Deliveryman validation failed" });
+            return res.status(400).json({ error: "Deliveryman validation failed" });
         }
 
         const alreadyExists = await Deliveryman.findOne({
@@ -57,9 +55,7 @@ class DeliverymanController {
         });
 
         if (!(await schema.isValid(req.body))) {
-            return res
-                .status(400)
-                .json({ error: "Update Deliveryman validation failed" });
+            return res.status(400).json({ error: "Update Deliveryman validation failed" });
         }
 
         const alreadyExists = await Deliveryman.findOne({
@@ -74,18 +70,15 @@ class DeliverymanController {
 
         await deliveryman.update(req.body);
 
-        const { id, name, email, avatar } = await Deliveryman.findByPk(
-            req.params.id,
-            {
-                include: [
-                    {
-                        model: File,
-                        as: "avatar",
-                        attributes: ["id", "path", "url"],
-                    },
-                ],
-            }
-        );
+        const { id, name, email, avatar } = await Deliveryman.findByPk(req.params.id, {
+            include: [
+                {
+                    model: File,
+                    as: "avatar",
+                    attributes: ["id", "path", "url"],
+                },
+            ],
+        });
 
         return res.json({
             id,
