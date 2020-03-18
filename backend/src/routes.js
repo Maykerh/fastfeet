@@ -11,6 +11,7 @@ import OrderController from "./app/controllers/OrderController";
 import DeliveriesController from "./app/controllers/DeliveriesController";
 
 import AuthMiddleware from "./app/middlewares/auth";
+import DeliveryProblemsController from "./app/controllers/DeliveryProblemsController";
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -24,6 +25,11 @@ routes.get("/deliveryman/:deliverymanId/deliveries-finished", DeliveriesControll
 routes.put("/deliveryman/:deliverymanId/deliveries/start/:orderId", DeliveriesController.start);
 routes.put("/deliveryman/:deliverymanId/deliveries/finish/:orderId", DeliveriesController.finish);
 
+routes.post("/delivery/:id/problems", DeliveryProblemsController.store);
+
+/**
+ * Rotas com autenticação
+ */
 routes.use(AuthMiddleware);
 
 routes.put("/users/:id", UserController.update);
@@ -41,5 +47,10 @@ routes.get("/orders/", OrderController.index);
 routes.post("/orders", OrderController.store);
 routes.put("/orders/:id", OrderController.update);
 routes.delete("/orders/:id", OrderController.delete);
+
+routes.get("/delivery/problems", DeliveryProblemsController.listAll);
+routes.get("/delivery/:id/problems", DeliveryProblemsController.listByDelivery);
+
+routes.put("/problem/:id/cancel-delivery", DeliveryProblemsController.cancelDelivery);
 
 export default routes;
