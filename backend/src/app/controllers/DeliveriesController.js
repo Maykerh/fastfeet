@@ -5,22 +5,19 @@ import * as Yup from "yup";
 import { endOfDay, startOfDay, isBefore, parseISO } from "date-fns";
 
 class DeliveriesController {
-    async listOpened(req, res) {
+    async index(req, res) {
         const { deliverymanId } = req.params;
+        const { showFinished } = req.query;
 
-        const deliveryManOrders = await Order.findAll({
+        const queryParams = {
             where: { deliveryman_id: deliverymanId, canceled_at: null, end_date: null },
-        });
+        };
 
-        return res.json(deliveryManOrders);
-    }
+        if (showFinished === 1) {
+            queryParams.where.end_date = { [Op.ne]: null };
+        }
 
-    async listFinished(req, res) {
-        const { deliverymanId } = req.params;
-
-        const deliveryManOrders = await Order.findAll({
-            where: { deliveryman_id: deliverymanId, end_date: { [Op.ne]: null } },
-        });
+        const deliveryManOrders = await Order.findAll(queryParams);
 
         return res.json(deliveryManOrders);
     }

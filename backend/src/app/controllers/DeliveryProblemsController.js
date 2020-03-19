@@ -9,7 +9,7 @@ import Mail from "../../lib/mail";
 import Recipient from "../models/Recipient";
 
 class DeliveryProblemsController {
-    async listAll(req, res) {
+    async index(req, res) {
         const deliveriesWithProblem = await Order.findAll({
             include: {
                 model: DeliveryProblems,
@@ -21,7 +21,7 @@ class DeliveryProblemsController {
         return res.json(deliveriesWithProblem);
     }
 
-    async listByDelivery(req, res) {
+    async indexByDelivery(req, res) {
         const deliveryProblems = await Order.findByPk(req.params.id, {
             include: {
                 model: DeliveryProblems,

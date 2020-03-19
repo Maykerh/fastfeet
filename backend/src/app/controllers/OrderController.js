@@ -5,18 +5,29 @@ import Order from "../models/Order";
 import Recipient from "../models/Recipient";
 import Deliveryman from "../models/Deliveryman";
 import Mail from "../../lib/mail";
+import { Op } from "sequelize";
 
 const EIGHTAMUTC = 5;
 const SIXPMUTC = 15;
 
 class OrderController {
     async index(req, res) {
-        const { page = 1 } = req.query;
+        const { page = 1, q: product } = req.query;
 
-        const results = await Order.findAll({
+        const queryParams = {
             limit: 10,
             offset: (page - 1) * 10,
-        });
+        };
+
+        if (product) {
+            queryParams.where = {
+                product: {
+                    [Op.iLike]: `%${product}%`,
+                },
+            };
+        }
+
+        const results = await Order.findAll(queryParams);
 
         return res.json(results);
     }

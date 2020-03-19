@@ -19,8 +19,7 @@ const upload = multer(multerConfig);
 routes.post("/users", UserController.store);
 routes.post("/session", SessionController.store);
 
-routes.get("/deliveryman/:deliverymanId/deliveries", DeliveriesController.listOpened);
-routes.get("/deliveryman/:deliverymanId/deliveries-finished", DeliveriesController.listFinished);
+routes.get("/deliveryman/:deliverymanId/deliveries", DeliveriesController.index);
 
 routes.put("/deliveryman/:deliverymanId/deliveries/start/:orderId", DeliveriesController.start);
 routes.put("/deliveryman/:deliverymanId/deliveries/finish/:orderId", DeliveriesController.finish);
@@ -34,6 +33,7 @@ routes.use(AuthMiddleware);
 
 routes.put("/users/:id", UserController.update);
 
+routes.get("/recipients", RecipientController.index);
 routes.post("/recipients", RecipientController.store);
 
 routes.post("/files", upload.single("file"), FileController.store);
@@ -48,8 +48,8 @@ routes.post("/orders", OrderController.store);
 routes.put("/orders/:id", OrderController.update);
 routes.delete("/orders/:id", OrderController.delete);
 
-routes.get("/delivery/problems", DeliveryProblemsController.listAll);
-routes.get("/delivery/:id/problems", DeliveryProblemsController.listByDelivery);
+routes.get("/delivery/problems", DeliveryProblemsController.index);
+routes.get("/delivery/:id/problems", DeliveryProblemsController.indexByDelivery);
 
 routes.put("/problem/:id/cancel-delivery", DeliveryProblemsController.cancelDelivery);
 
