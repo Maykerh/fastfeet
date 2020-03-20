@@ -2,6 +2,9 @@
     "folders": [
         {
             "path": "C:\\Projetos\\bootcamp\\gostackdesafiofinal\\backend"
+        },
+        {
+            "path": "C:\\Projetos\\bootcamp\\gostackdesafiofinal\\frontend"
         }
     ],
     "settings": {}
