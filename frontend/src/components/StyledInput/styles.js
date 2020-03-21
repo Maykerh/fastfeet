@@ -1,6 +1,15 @@
 import styled from "styled-components";
 import { Input } from "@rocketseat/unform";
 
+export const Wrapper = styled.div`
+    margin-bottom: 15px;
+
+    span {
+        color: #aa0000;
+        font-size: 12px;
+        margin-left: 2px;
+    }
+`;
 export const StyledInput = styled(Input)`
     height: 50px;
     width: 100%;
@@ -10,7 +19,7 @@ export const StyledInput = styled(Input)`
     padding: 0 10px;
     box-sizing: border-box;
     border-radius: 5px;
-    margin-bottom: 15px;
+    margin-bottom: 3px;
     margin-top: 2px;
 
     ::placeholder {

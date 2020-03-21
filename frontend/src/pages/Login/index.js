@@ -1,5 +1,6 @@
 import React from "react";
 import { Form } from "@rocketseat/unform";
+import * as Yup from "yup";
 
 import { Container } from "./styles";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,8 +12,18 @@ import { signInRequest } from "../../store/modules/auth/actions";
 import StyledInput from "../../components/StyledInput";
 import Button from "../../components/Button";
 
+const schema = Yup.object().shape({
+    email: Yup.string()
+        .email()
+        .required("Email is required"),
+    password: Yup.string()
+        .min(6, "Password minimun length is 6")
+        .required("Password is required"),
+});
+
 export default function Login() {
     const dispatch = useDispatch();
+    const loading = useSelector(state => state.auth.loading);
 
     function handleSubmit({ email, password }) {
         dispatch(signInRequest(email, password));
@@ -24,7 +35,7 @@ export default function Login() {
                 <div>
                     <img src={logo} alt="FastFeet" />
                 </div>
-                <Form onSubmit={handleSubmit}>
+                <Form schema={schema} onSubmit={handleSubmit}>
                     <div>
                         <StyledInput
                             labelText="SEU E-MAIL"
@@ -42,7 +53,7 @@ export default function Login() {
                         />
                     </div>
                     <Button
-                        text={"Entrar no sistema"}
+                        text={loading ? "Carregando..." : "Entrar no sistema"}
                         width={"100%"}
                         type={"submit"}
                     />
