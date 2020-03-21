@@ -14,21 +14,22 @@ export function* signIn({ payload }) {
             password,
         });
 
-        console.log("voltou");
-        console.log(session);
-
         api.defaults.headers.Authorization = `Bearer ${session.data.token}`;
-        console.log("voltou2");
 
-        yield put(signInSuccess(session.data.token));
-        console.log("voltou3");
+        yield put(signInSuccess(session.data.token, email, session.data.user));
         history.push("/orders");
     } catch (err) {
-        console.log(err);
         toast.error("Falha na autenticação");
 
         yield put(signFailure());
     }
 }
 
-export default all([takeLatest("@auth/SIGN_IN_REQUEST", signIn)]);
+export function* logout() {
+    history.push("/");
+}
+
+export default all([
+    takeLatest("@auth/SIGN_IN_REQUEST", signIn),
+    takeLatest("@auth/LOGOUT", logout),
+]);

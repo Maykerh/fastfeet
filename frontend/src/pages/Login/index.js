@@ -1,9 +1,9 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Form } from "@rocketseat/unform";
 import * as Yup from "yup";
 
 import { Container } from "./styles";
-import { useDispatch, useSelector } from "react-redux";
 
 import logo from "../../assets/fastfeet-logo.png";
 

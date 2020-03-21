@@ -12,6 +12,7 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 token: action.payload.token,
+                user: action.payload.user,
                 signed: true,
                 loading: false,
             };
@@ -19,6 +20,11 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 loading: false,
+            };
+        case "@auth/LOGOUT":
+            return {
+                ...state,
+                signed: false,
             };
         default:
             return state;
