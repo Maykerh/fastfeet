@@ -1,18 +1,21 @@
 import React from "react";
-import { Form, Input } from "@rocketseat/unform";
+import { Form } from "@rocketseat/unform";
 
 import { Container } from "./styles";
+import { useDispatch, useSelector } from "react-redux";
 
 import logo from "../../assets/fastfeet-logo.png";
+
+import { signInRequest } from "../../store/modules/auth/actions";
 
 import StyledInput from "../../components/StyledInput";
 import Button from "../../components/Button";
 
 export default function Login() {
+    const dispatch = useDispatch();
+
     function handleSubmit({ email, password }) {
-        alert("foi");
-        console.log(email, password);
-        // dispatch(signUpRequest(name, email, password));
+        dispatch(signInRequest(email, password));
     }
 
     return (
