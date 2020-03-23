@@ -23,7 +23,7 @@ export const HeaderColumn = styled.th`
 
     > span {
         font-size: 14px;
-        color: #262626;
+        color: #383838;
         font-weight: bolder;
     }
 `;

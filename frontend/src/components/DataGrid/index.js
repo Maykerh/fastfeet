@@ -4,9 +4,22 @@ import PropTypes from "prop-types";
 import Header from "./Header";
 import Line from "./Line";
 
-import { Container } from "./styles";
+import Button from "../../components/Button";
 
-export default function DataGrid({ data, headers, onView, onEdit, onDelete }) {
+import { Container, Controls } from "./styles";
+
+import {
+    MdAdd,
+    MdSearch,
+    // MdVisibility,
+    // MdEdit,
+    // MdDeleteForever,
+    // MdRefresh,
+} from "react-icons/md";
+
+export default function DataGrid({ data, headers, onView, onEdit, onDelete, onSearch }) {
+    const [searchDelay, setSearchDelay] = useState(null);
+
     function hasActions() {
         return onView || onEdit || onDelete;
     }
@@ -17,12 +30,46 @@ export default function DataGrid({ data, headers, onView, onEdit, onDelete }) {
         ));
     }
 
+    function handleSearch(searchText) {
+        if (searchDelay) {
+            clearTimeout(searchDelay);
+        }
+
+        setSearchDelay(setTimeout(() => onSearch(searchText), 1000));
+    }
+
     return (
         <Container>
-            <table>
-                <Header headers={headers} hasActions={hasActions()} />
-                {renderLines()}
-            </table>
+            <Controls>
+                <div>
+                    <MdSearch size={20} color="#999999" />
+                    <input
+                        type="text"
+                        name="search"
+                        id="search"
+                        placeholder="Busca por encomendas"
+                        onChange={e => {
+                            handleSearch(e.target.value);
+                        }}
+                    />
+                </div>
+                <div>
+                    <Button
+                        text={"Cadastrar"}
+                        Icon={MdAdd}
+                        onClick={() => {
+                            alert("a");
+                        }}
+                        width={"130px"}
+                    />
+                </div>
+            </Controls>
+            <div>
+                <table>
+                    <Header headers={headers} hasActions={hasActions()} />
+                    {renderLines()}
+                </table>
+            </div>
         </Container>
     );
 }
@@ -39,4 +86,5 @@ DataGrid.propTypes = {
     onView: PropTypes.func,
     onEdit: PropTypes.func,
     onDelete: PropTypes.func,
+    onSearch: PropTypes.func.isRequired,
 };

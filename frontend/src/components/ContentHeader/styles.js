@@ -13,5 +13,5 @@ export const Header = styled.div`
     align-items: center;
     font-weight: bolder;
     font-size: 20px;
-    color: #262626;
+    color: #383838;
 `;

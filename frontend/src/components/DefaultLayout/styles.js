@@ -46,7 +46,7 @@ export const HeaderMenu = styled.div`
     ${props =>
         css`
             #${props.activePage} {
-                color: #262626;
+                color: #383838;
             }
         `}
 `;
@@ -64,7 +64,7 @@ export const HeaderControls = styled.div`
         > div:first-child {
             font-size: 12px;
             font-weight: bold;
-            color: #262626;
+            color: #383838;
             margin-bottom: 5px;
         }
 

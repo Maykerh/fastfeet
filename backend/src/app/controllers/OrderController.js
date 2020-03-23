@@ -27,6 +27,17 @@ class OrderController {
             };
         }
 
+        queryParams.include = [
+            {
+                model: Recipient,
+                attributes: ["name", "city", "state"],
+            },
+            {
+                model: Deliveryman,
+                attributes: ["name"],
+            },
+        ];
+
         const results = await Order.findAll(queryParams);
 
         return res.json(results);
