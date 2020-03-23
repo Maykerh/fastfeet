@@ -13,20 +13,16 @@ export default function DataGrid({ data, headers, onView, onEdit, onDelete }) {
 
     function renderLines() {
         return data.map(rowData => (
-            <Line
-                headers={headers}
-                rowData={rowData}
-                onView={onView}
-                onEdit={onEdit}
-                onDelete={onDelete}
-            />
+            <Line headers={headers} rowData={rowData} onView={onView} onEdit={onEdit} onDelete={onDelete} />
         ));
     }
 
     return (
         <Container>
-            <Header headers={headers} hasActions={hasActions()} />
-            {renderLines()}
+            <table>
+                <Header headers={headers} hasActions={hasActions()} />
+                {renderLines()}
+            </table>
         </Container>
     );
 }

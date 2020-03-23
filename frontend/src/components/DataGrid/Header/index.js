@@ -5,7 +5,7 @@ import { HeaderLine, HeaderColumn } from "./styles";
 
 export default function Header({ headers, hasActions }) {
     const headerColumns = headers.map(header => (
-        <HeaderColumn width={header.width ? header.width : "100%"}>
+        <HeaderColumn width={header.width}>
             <span>{header.title}</span>
         </HeaderColumn>
     ));
