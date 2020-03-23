@@ -16,7 +16,7 @@ export function* signIn({ payload }) {
 
         api.defaults.headers.Authorization = `Bearer ${session.data.token}`;
 
-        yield put(signInSuccess(session.data.token, email, session.data.user));
+        yield put(signInSuccess(session.data.token, session.data.user));
         history.push("/orders");
     } catch (err) {
         toast.error("Falha na autenticação");
@@ -25,7 +25,7 @@ export function* signIn({ payload }) {
     }
 }
 
-export function* logout() {
+export function logout() {
     history.push("/");
 }
 

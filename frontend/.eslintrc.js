@@ -25,5 +25,10 @@ module.exports = {
         ],
         "import/prefer-default-export": "off",
         "react/jsx-props-no-spreading": "off",
+        "react/forbid-prop-types": "off",
+        "react/jsx-curly-brace-presence": "off",
+        "jsx-a11y/no-static-element-interactions": "off",
+        "jsx-a11y/click-events-have-key-events": "off",
+        "react/button-has-type": "off",
     },
 };
