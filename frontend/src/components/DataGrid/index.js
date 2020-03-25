@@ -17,16 +17,29 @@ import {
     // MdRefresh,
 } from "react-icons/md";
 
-export default function DataGrid({ data, headers, onView, onEdit, onDelete, onSearch }) {
+export default function DataGrid({
+    data,
+    columns,
+    onView,
+    onEdit,
+    onDelete,
+    onSearch,
+    onCancel,
+    hideControls,
+}) {
     const [searchDelay, setSearchDelay] = useState(null);
 
-    function hasActions() {
-        return onView || onEdit || onDelete;
-    }
-
     function renderLines() {
-        return data.map(rowData => (
-            <Line headers={headers} rowData={rowData} onView={onView} onEdit={onEdit} onDelete={onDelete} />
+        return data.map((rowData, index) => (
+            <Line
+                key={index + Math.random() + rowData[Object.keys(rowData)[0]]}
+                columns={columns}
+                rowData={rowData}
+                onView={onView}
+                onEdit={onEdit}
+                onDelete={onDelete}
+                onCancel={onCancel}
+            />
         ));
     }
 
@@ -38,8 +51,8 @@ export default function DataGrid({ data, headers, onView, onEdit, onDelete, onSe
         setSearchDelay(setTimeout(() => onSearch(searchText), 1000));
     }
 
-    return (
-        <Container>
+    function getControlsCmp() {
+        return (
             <Controls>
                 <div>
                     <MdSearch size={20} color="#999999" />
@@ -64,9 +77,17 @@ export default function DataGrid({ data, headers, onView, onEdit, onDelete, onSe
                     />
                 </div>
             </Controls>
+        );
+    }
+
+    const hasActions = !!onView || !!onEdit || !!onDelete || !!onCancel;
+
+    return (
+        <Container>
+            {hideControls ? null : getControlsCmp()}
             <div>
                 <table>
-                    <Header headers={headers} hasActions={hasActions()} />
+                    <Header columns={columns} hasActions={hasActions} />
                     {renderLines()}
                 </table>
             </div>
@@ -78,13 +99,25 @@ DataGrid.defaultProps = {
     onView: null,
     onEdit: null,
     onDelete: null,
+    onSearch: null,
+    onCancel: null,
+    hideControls: false,
 };
 
 DataGrid.propTypes = {
-    headers: PropTypes.array.isRequired,
+    columns: PropTypes.arrayOf(
+        PropTypes.shape({
+            field: PropTypes.string.isRequired,
+            title: PropTypes.string.isRequired,
+            width: PropTypes.string,
+            callback: PropTypes.func,
+        })
+    ).isRequired,
     data: PropTypes.array.isRequired,
     onView: PropTypes.func,
     onEdit: PropTypes.func,
     onDelete: PropTypes.func,
-    onSearch: PropTypes.func.isRequired,
+    onSearch: PropTypes.func,
+    onCancel: PropTypes.func,
+    hideControls: PropTypes.bool,
 };

@@ -7,6 +7,9 @@ import DefaultLayout from "../components/DefaultLayout";
 
 import Login from "../pages/Login";
 import Orders from "../pages/Orders";
+import Deliverymans from "../pages/Deliverymans";
+import Recipients from "../pages/Recipients";
+import Problems from "../pages/Problems";
 
 export default function Routes() {
     return (
@@ -14,6 +17,9 @@ export default function Routes() {
             <Route path="/" exact component={Login} />
             <DefaultLayout>
                 <PrivateRoute path="/orders" component={Orders} />
+                <PrivateRoute path="/deliverymans" component={Deliverymans} />
+                <PrivateRoute path="/recipients" component={Recipients} />
+                <PrivateRoute path="/problems" component={Problems} />
             </DefaultLayout>
         </Switch>
     );

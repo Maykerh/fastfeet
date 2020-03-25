@@ -9,7 +9,7 @@ class File extends Model {
                 url: {
                     type: Sequelize.VIRTUAL,
                     get() {
-                        return `${process.env.APP_URL}/tmp/${this.path}`;
+                        return `${process.env.APP_URL}/uploads/${this.path}`;
                     },
                 },
             },

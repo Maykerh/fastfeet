@@ -13,7 +13,7 @@ export const LineWrapper = styled.tr`
 `;
 
 export const Column = styled.td`
-    width: ${props => (props.width ? props.width : "150px")};
+    width: ${props => (props.width ? props.width : "100%")};
     min-width: ${props => (props.width && props.width.indexOf("%") === -1 ? props.width : "100px")};
 
     white-space: nowrap;

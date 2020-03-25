@@ -19,10 +19,7 @@ module.exports = {
     plugins: ["react", "prettier"],
     rules: {
         "prettier/prettier": "error",
-        "react/jsx-filename-extension": [
-            "warn",
-            { extensions: [".js", ".jsx"] },
-        ],
+        "react/jsx-filename-extension": ["warn", { extensions: [".js", ".jsx"] }],
         "import/prefer-default-export": "off",
         "react/jsx-props-no-spreading": "off",
         "react/forbid-prop-types": "off",
@@ -30,5 +27,6 @@ module.exports = {
         "jsx-a11y/no-static-element-interactions": "off",
         "jsx-a11y/click-events-have-key-events": "off",
         "react/button-has-type": "off",
+        "react/no-array-index-key": "off",
     },
 };

@@ -5,8 +5,6 @@ import api from "../../services/api";
 import ContentHeader from "../../components/ContentHeader";
 import DataGrid from "../../components/DataGrid";
 
-import { Container } from "./styles";
-
 export default function Orders() {
     const [orders, setOrders] = useState([]);
     const [searchText, setSearchText] = useState(null);
@@ -27,7 +25,7 @@ export default function Orders() {
         return "Pendente";
     }
 
-    async function loadOrders() {
+    async function loadData() {
         const response = await api.get("/orders", { params: { q: searchText } });
 
         const normalizedData = response.data.map(order => ({
@@ -43,14 +41,14 @@ export default function Orders() {
     }
 
     useEffect(() => {
-        loadOrders();
+        loadData();
     }, [searchText]);
 
     return (
-        <Container>
+        <div>
             <ContentHeader title={"Gerenciando encomendas"} />
             <DataGrid
-                headers={[
+                columns={[
                     { field: "id", title: "ID", width: "50px" },
                     { field: "recipient", title: "Destinatário", width: "100%" },
                     { field: "deliveryman", title: "Entregador", width: "100%" },
@@ -60,7 +58,6 @@ export default function Orders() {
                 ]}
                 data={orders}
                 onSearch={text => {
-                    console.log("foi");
                     setSearchText(text);
                 }}
                 onView={() => {
@@ -73,6 +70,6 @@ export default function Orders() {
                     alert("delete");
                 }}
             />
-        </Container>
+        </div>
     );
 }

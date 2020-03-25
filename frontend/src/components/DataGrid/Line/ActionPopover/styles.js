@@ -4,7 +4,7 @@ export const ActionPopover = styled.div`
     width: 140px;
     background-color: #fff;
     border: 1px solid #e5e5e5;
-    padding: 10px;
+    padding: 5px;
     border-radius: 4px;
 
     > div {

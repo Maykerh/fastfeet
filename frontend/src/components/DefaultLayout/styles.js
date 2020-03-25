@@ -78,7 +78,7 @@ export const HeaderControls = styled.div`
 `;
 
 export const ContentContainer = styled.div`
-    height: 100%;
+    height: calc(100% - 62px);
     margin: 0 auto;
     padding: 0 80px;
 `;
