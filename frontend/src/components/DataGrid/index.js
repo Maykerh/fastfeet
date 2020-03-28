@@ -8,14 +8,7 @@ import Button from "../../components/Button";
 
 import { Container, Controls } from "./styles";
 
-import {
-    MdAdd,
-    MdSearch,
-    // MdVisibility,
-    // MdEdit,
-    // MdDeleteForever,
-    // MdRefresh,
-} from "react-icons/md";
+import { MdAdd, MdSearch } from "react-icons/md";
 
 export default function DataGrid({
     data,
@@ -25,6 +18,7 @@ export default function DataGrid({
     onDelete,
     onSearch,
     onCancel,
+    onCreate,
     hideControls,
 }) {
     const [searchDelay, setSearchDelay] = useState(null);
@@ -67,14 +61,7 @@ export default function DataGrid({
                     />
                 </div>
                 <div>
-                    <Button
-                        text={"Cadastrar"}
-                        Icon={MdAdd}
-                        onClick={() => {
-                            alert("a");
-                        }}
-                        width={"130px"}
-                    />
+                    <Button text={"Cadastrar"} Icon={MdAdd} onClick={onCreate} width={"130px"} />
                 </div>
             </Controls>
         );
@@ -101,6 +88,7 @@ DataGrid.defaultProps = {
     onDelete: null,
     onSearch: null,
     onCancel: null,
+    onCreate: null,
     hideControls: false,
 };
 
@@ -119,5 +107,6 @@ DataGrid.propTypes = {
     onDelete: PropTypes.func,
     onSearch: PropTypes.func,
     onCancel: PropTypes.func,
+    onCreate: PropTypes.func,
     hideControls: PropTypes.bool,
 };

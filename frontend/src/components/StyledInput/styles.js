@@ -28,7 +28,7 @@ export const StyledInput = styled(Input)`
 `;
 
 export const Label = styled.label.attrs(props => ({
-    for: props.for ? props.for : null,
+    htmlFor: props.for ? props.for : null,
 }))`
     color: #656565;
     font-family: Roboto, sans-serif;

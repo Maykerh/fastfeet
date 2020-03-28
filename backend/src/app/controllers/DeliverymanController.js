@@ -62,7 +62,7 @@ class DeliverymanController {
         const schema = Yup.object().shape({
             name: Yup.string(),
             email: Yup.string().email(),
-            avatar_id: Yup.number(),
+            avatar_id: Yup.number().nullable(),
         });
 
         if (!(await schema.isValid(req.body))) {
@@ -70,7 +70,7 @@ class DeliverymanController {
         }
 
         const alreadyExists = await Deliveryman.findOne({
-            where: { email: req.body.email },
+            where: { email: req.body.email, id: { [Op.ne]: req.params.id } },
         });
 
         if (alreadyExists) {

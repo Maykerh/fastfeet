@@ -6,6 +6,8 @@ import ContentHeader from "../../components/ContentHeader";
 import DataGrid from "../../components/DataGrid";
 import Avatar from "../../components/Avatar";
 
+import history from "../../services/history";
+
 export default function Orders() {
     const [deliverymans, setDeliverymans] = useState([]);
     const [searchText, setSearchText] = useState(null);
@@ -15,7 +17,8 @@ export default function Orders() {
 
         const normalizedData = response.data.map(deliveryman => ({
             id: deliveryman.id,
-            image: deliveryman.avatar ? deliveryman.avatar.url : null,
+            avatar: deliveryman.avatar ? deliveryman.avatar.url : null,
+            avatar_id: deliveryman.avatar ? deliveryman.avatar.id : null,
             name: deliveryman.name,
             email: deliveryman.email,
         }));
@@ -25,7 +28,7 @@ export default function Orders() {
 
     function getImage(rowData) {
         return (
-            <Avatar url={rowData.image} width={"33px"} height={"33px"} userName={rowData.name} />
+            <Avatar url={rowData.avatar} width={"33px"} height={"33px"} userName={rowData.name} />
         );
     }
 
@@ -47,12 +50,13 @@ export default function Orders() {
                 onSearch={text => {
                     setSearchText(text);
                 }}
-                onEdit={() => {
-                    alert("edit");
+                onEdit={data => {
+                    history.push({ pathname: "/deliverymans/form", state: { deliveryman: data } });
                 }}
                 onDelete={() => {
                     alert("delete");
                 }}
+                onCreate={() => history.push("/deliverymans/form")}
             />
         </div>
     );

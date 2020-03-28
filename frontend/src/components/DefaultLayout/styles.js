@@ -80,5 +80,11 @@ export const HeaderControls = styled.div`
 export const ContentContainer = styled.div`
     height: calc(100% - 62px);
     margin: 0 auto;
-    padding: 0 80px;
+    width: calc(100% - 160px);
+    display: flex;
+    justify-content: center;
+
+    > div {
+        width: 100%;
+    }
 `;
