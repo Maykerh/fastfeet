@@ -4,6 +4,7 @@ import pt from "date-fns/locale/pt";
 import Order from "../models/Order";
 import Recipient from "../models/Recipient";
 import Deliveryman from "../models/Deliveryman";
+import File from "../models/File";
 import Mail from "../../lib/mail";
 import { Op } from "sequelize";
 
@@ -15,8 +16,8 @@ class OrderController {
         const { page = 1, q: product } = req.query;
 
         const queryParams = {
-            limit: 10,
-            offset: (page - 1) * 10,
+            // limit: 10,
+            // offset: (page - 1) * 10,
         };
 
         if (product) {
@@ -30,11 +31,16 @@ class OrderController {
         queryParams.include = [
             {
                 model: Recipient,
-                attributes: ["name", "city", "state"],
+                attributes: ["name", "city", "state", "street"],
             },
             {
                 model: Deliveryman,
                 attributes: ["name"],
+            },
+            {
+                model: File,
+                as: "signature",
+                attributes: ["path", "url"],
             },
         ];
 
