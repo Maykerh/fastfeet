@@ -6,7 +6,7 @@ export default props => {
     if (props.labelText) {
         return (
             <Wrapper>
-                <Label for={props.name}>{props.labelText}</Label>
+                <Label htmlFor={props.name}>{props.labelText}</Label>
                 <StyledInput {...props} />
             </Wrapper>
         );

@@ -5,21 +5,23 @@ import history from "../../../services/history";
 
 import api from "../../../services/api";
 
-function* deliverymanRegister({ payload }) {
-    var deliveryman = {};
-
+function* recipientRegister({ payload }) {
     try {
-        const { avatar_id, name, email } = payload;
+        const { name, street, number, complement, city, state, cep } = payload;
 
-        deliveryman = yield call(api.post, "deliveryman", {
-            avatar_id,
+        yield call(api.post, "recipients", {
             name,
-            email,
+            street,
+            number,
+            complement,
+            city,
+            state,
+            cep,
         });
 
         toast.success("Salvo com sucesso");
 
-        history.push("/deliverymans");
+        history.push("/recipients");
     } catch (err) {
         if (err.response.data.error) {
             toast.error(err.response.data.error);
@@ -29,19 +31,23 @@ function* deliverymanRegister({ payload }) {
     }
 }
 
-function* deliverymanUpdate({ payload }) {
-    const { avatar_id, name, email, id } = payload;
-
+function* recipientUpdate({ payload }) {
     try {
-        yield call(api.put, `deliveryman/${id}`, {
-            avatar_id,
+        const { id, name, street, number, complement, city, state, cep } = payload;
+
+        yield call(api.put, `recipients/${id}`, {
             name,
-            email,
+            street,
+            number,
+            complement,
+            city,
+            state,
+            cep,
         });
 
         toast.success("Atualizado com sucesso", {});
 
-        history.push("/deliverymans");
+        history.push("/recipients");
     } catch (err) {
         if (err.response.data.error) {
             toast.error(err.response.data.error);
@@ -51,11 +57,11 @@ function* deliverymanUpdate({ payload }) {
     }
 }
 
-function* deliverymanDelete({ payload }) {
+function* recipientDelete({ payload }) {
     const { id, callback } = payload;
 
     try {
-        yield call(api.delete, `deliveryman/${id}`);
+        yield call(api.delete, `recipients/${id}`);
 
         toast.success("Excluído com sucesso", {});
     } catch (err) {
@@ -70,7 +76,7 @@ function* deliverymanDelete({ payload }) {
 }
 
 export default all([
-    takeLatest("@deliveryman/REGISTER_REQUEST", deliverymanRegister),
-    takeLatest("@deliveryman/UPDATE_REQUEST", deliverymanUpdate),
-    takeLatest("@deliveryman/DELETE_REQUEST", deliverymanDelete),
+    takeLatest("@recipient/REGISTER_REQUEST", recipientRegister),
+    takeLatest("@recipient/UPDATE_REQUEST", recipientUpdate),
+    takeLatest("@recipient/DELETE_REQUEST", recipientDelete),
 ]);

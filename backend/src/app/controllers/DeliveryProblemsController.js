@@ -10,12 +10,12 @@ import Recipient from "../models/Recipient";
 
 class DeliveryProblemsController {
     async index(req, res) {
-        const deliveriesWithProblem = await Order.findAll({
-            include: {
-                model: DeliveryProblems,
-                as: "problems",
-                required: true,
-            },
+        const { page = 1 } = req.query;
+
+        const deliveriesWithProblem = await DeliveryProblems.findAll({
+            limit: 10,
+            offset: (page - 1) * 10,
+            include: [{ model: Order, attributes: ["id", "canceled_at"] }],
         });
 
         return res.json(deliveriesWithProblem);

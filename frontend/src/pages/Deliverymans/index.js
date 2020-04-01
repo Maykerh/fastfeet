@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
 import api from "../../services/api";
 
@@ -8,12 +9,25 @@ import Avatar from "../../components/Avatar";
 
 import history from "../../services/history";
 
-export default function Orders() {
+import { deliverymanDeleteRequest } from "../../store/modules/deliveryman/actions";
+
+export default function Deliverymans() {
     const [deliverymans, setDeliverymans] = useState([]);
+    const [page, setPage] = useState(1);
     const [searchText, setSearchText] = useState(null);
 
+    const dispatch = useDispatch();
+
+    function handleDelete(id) {
+        if (!window.confirm("Tem certeza que deseja excluir?")) {
+            return;
+        }
+
+        dispatch(deliverymanDeleteRequest(id, loadData));
+    }
+
     async function loadData() {
-        const response = await api.get("/deliveryman", { params: { q: searchText } });
+        const response = await api.get("/deliveryman", { params: { q: searchText, page: page } });
 
         const normalizedData = response.data.map(deliveryman => ({
             id: deliveryman.id,
@@ -34,7 +48,7 @@ export default function Orders() {
 
     useEffect(() => {
         loadData();
-    }, [searchText]);
+    }, [page, searchText]);
 
     return (
         <div>
@@ -47,15 +61,14 @@ export default function Orders() {
                     { field: "email", title: "Email", width: "100%" },
                 ]}
                 data={deliverymans}
-                onSearch={text => {
+                onSearch={(text, page) => {
+                    setPage(page);
                     setSearchText(text);
                 }}
                 onEdit={data => {
                     history.push({ pathname: "/deliverymans/form", state: { deliveryman: data } });
                 }}
-                onDelete={() => {
-                    alert("delete");
-                }}
+                onDelete={handleDelete}
                 onCreate={() => history.push("/deliverymans/form")}
             />
         </div>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { format } from "date-fns";
 import { pt } from "date-fns/locale";
 
@@ -8,13 +9,20 @@ import ContentHeader from "../../components/ContentHeader";
 import DataGrid from "../../components/DataGrid";
 import Modal from "../../components/Modal";
 
+import history from "../../services/history";
+
+import { orderDeleteRequest } from "../../store/modules/order/actions";
+
 import { ModalContent } from "./styles";
 
 export default function Orders() {
     const [orders, setOrders] = useState([]);
-    const [searchText, setSearchText] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedOrderData, setSelectedOrderData] = useState({});
+    const [page, setPage] = useState(1);
+    const [searchText, setSearchText] = useState(null);
+
+    const dispatch = useDispatch();
 
     function getStatus(order) {
         if (order.canceled_at != null) {
@@ -33,12 +41,15 @@ export default function Orders() {
     }
 
     async function loadData() {
-        const response = await api.get("/orders", { params: { q: searchText } });
+        const response = await api.get("/orders", { params: { q: searchText, page: page } });
 
         const normalizedData = response.data.map(order => ({
             id: order.id,
-            recipient: order.Recipient.name,
-            deliveryman: order.Deliveryman.name,
+            product: order.product,
+            recipientName: order.Recipient.name,
+            recipient: order.Recipient,
+            deliverymanName: order.Deliveryman.name,
+            deliveryman: order.Deliveryman,
             city: order.Recipient.city,
             state: order.Recipient.state,
             street: order.Recipient.street,
@@ -56,7 +67,7 @@ export default function Orders() {
         setSelectedOrderData(orderData);
     }
 
-    function getContent() {
+    function getViewContent() {
         const { street, city, state, signatureUrl, start_date, end_date } = selectedOrderData;
 
         return (
@@ -96,9 +107,17 @@ export default function Orders() {
         );
     }
 
+    function handleDelete(id) {
+        if (!window.confirm("Tem certeza que deseja excluir?")) {
+            return;
+        }
+
+        dispatch(orderDeleteRequest(id, loadData));
+    }
+
     useEffect(() => {
         loadData();
-    }, [searchText]);
+    }, [page, searchText]);
 
     return (
         <div>
@@ -106,26 +125,27 @@ export default function Orders() {
             <DataGrid
                 columns={[
                     { field: "id", title: "ID", width: "50px" },
-                    { field: "recipient", title: "Destinatário", width: "100%" },
-                    { field: "deliveryman", title: "Entregador", width: "100%" },
+                    { field: "product", title: "Produto", width: "100%" },
+                    { field: "recipientName", title: "Destinatário", width: "100%" },
+                    { field: "deliverymanName", title: "Entregador", width: "100%" },
                     { field: "city", title: "Cidade", width: "100%" },
                     { field: "state", title: "Estado", width: "100%" },
                     { field: "status", title: "Status", width: "100px" },
                 ]}
                 data={orders}
-                onSearch={text => {
+                onSearch={(text, page) => {
+                    setPage(page);
                     setSearchText(text);
                 }}
                 onView={onView}
-                onEdit={() => {
-                    alert("edit");
+                onEdit={data => {
+                    history.push({ pathname: "/orders/form", state: { order: data } });
                 }}
-                onDelete={() => {
-                    alert("delete");
-                }}
+                onDelete={handleDelete}
+                onCreate={() => history.push("/orders/form")}
             />
             <Modal
-                getContent={getContent}
+                getContent={getViewContent}
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
                 width={400}

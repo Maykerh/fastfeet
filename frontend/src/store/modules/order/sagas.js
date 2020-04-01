@@ -5,21 +5,19 @@ import history from "../../../services/history";
 
 import api from "../../../services/api";
 
-function* deliverymanRegister({ payload }) {
-    var deliveryman = {};
-
+function* orderRegister({ payload }) {
     try {
-        const { avatar_id, name, email } = payload;
+        const { recipient_id, deliveryman_id, product } = payload;
 
-        deliveryman = yield call(api.post, "deliveryman", {
-            avatar_id,
-            name,
-            email,
+        yield call(api.post, "orders", {
+            recipient_id,
+            deliveryman_id,
+            product,
         });
 
         toast.success("Salvo com sucesso");
 
-        history.push("/deliverymans");
+        history.push("/orders");
     } catch (err) {
         if (err.response.data.error) {
             toast.error(err.response.data.error);
@@ -29,19 +27,19 @@ function* deliverymanRegister({ payload }) {
     }
 }
 
-function* deliverymanUpdate({ payload }) {
-    const { avatar_id, name, email, id } = payload;
-
+function* orderUpdate({ payload }) {
     try {
-        yield call(api.put, `deliveryman/${id}`, {
-            avatar_id,
-            name,
-            email,
+        const { recipient_id, deliveryman_id, product, id } = payload;
+
+        yield call(api.put, `orders/${id}`, {
+            recipient_id,
+            deliveryman_id,
+            product,
         });
 
         toast.success("Atualizado com sucesso", {});
 
-        history.push("/deliverymans");
+        history.push("/orders");
     } catch (err) {
         if (err.response.data.error) {
             toast.error(err.response.data.error);
@@ -51,11 +49,11 @@ function* deliverymanUpdate({ payload }) {
     }
 }
 
-function* deliverymanDelete({ payload }) {
+function* orderDelete({ payload }) {
     const { id, callback } = payload;
 
     try {
-        yield call(api.delete, `deliveryman/${id}`);
+        yield call(api.delete, `orders/${id}`);
 
         toast.success("Excluído com sucesso", {});
     } catch (err) {
@@ -70,7 +68,7 @@ function* deliverymanDelete({ payload }) {
 }
 
 export default all([
-    takeLatest("@deliveryman/REGISTER_REQUEST", deliverymanRegister),
-    takeLatest("@deliveryman/UPDATE_REQUEST", deliverymanUpdate),
-    takeLatest("@deliveryman/DELETE_REQUEST", deliverymanDelete),
+    takeLatest("@order/REGISTER_REQUEST", orderRegister),
+    takeLatest("@order/UPDATE_REQUEST", orderUpdate),
+    takeLatest("@order/DELETE_REQUEST", orderDelete),
 ]);

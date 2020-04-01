@@ -8,16 +8,13 @@ import File from "../models/File";
 import Mail from "../../lib/mail";
 import { Op } from "sequelize";
 
-const EIGHTAMUTC = 5;
-const SIXPMUTC = 15;
-
 class OrderController {
     async index(req, res) {
         const { page = 1, q: product } = req.query;
 
         const queryParams = {
-            // limit: 10,
-            // offset: (page - 1) * 10,
+            limit: 10,
+            offset: (page - 1) * 10,
         };
 
         if (product) {
@@ -31,11 +28,11 @@ class OrderController {
         queryParams.include = [
             {
                 model: Recipient,
-                attributes: ["name", "city", "state", "street"],
+                attributes: ["id", "name", "city", "state", "street"],
             },
             {
                 model: Deliveryman,
-                attributes: ["name"],
+                attributes: ["id", "name"],
             },
             {
                 model: File,
@@ -97,29 +94,32 @@ class OrderController {
 
     async update(req, res) {
         const schema = Yup.object().shape({
-            start_date: Yup.date(),
-            end_date: Yup.date(),
+            recipient_id: Yup.number().required(),
+            deliveryman_id: Yup.number().required(),
+            product: Yup.string().required(),
         });
 
         if (!(await schema.isValid(req.body))) {
             return res.status(400).json({ error: "Order validation failed" });
         }
 
-        const { start_date, end_date } = req.body;
+        const { recipient_id, deliveryman_id, product } = req.body;
 
-        if (start_date) {
-            const startHour = parseISO(start_date).getUTCHours();
+        const recipient = await Recipient.findByPk(recipient_id);
 
-            if (startHour < EIGHTAMUTC || startHour >= SIXPMUTC) {
-                return res.status(400).json({
-                    error: "Product can only be withdrawn beetwen 8am and 6pm",
-                });
-            }
+        if (!recipient) {
+            return res.status(400).json({ error: "Recipient doesnt exists" });
+        }
+
+        const deliveryman = await Deliveryman.findByPk(deliveryman_id);
+
+        if (!deliveryman) {
+            return res.status(400).json({ error: "Deliveryman doesnt exists" });
         }
 
         const order = await Order.findByPk(req.params.id);
 
-        await order.update({ start_date, end_date });
+        await order.update({ recipient_id, deliveryman_id, product });
 
         return res.json(order);
     }

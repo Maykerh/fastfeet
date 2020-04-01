@@ -4,6 +4,9 @@ import { Op } from "sequelize";
 import * as Yup from "yup";
 import { endOfDay, startOfDay, isBefore, parseISO } from "date-fns";
 
+const EIGHTAMUTC = 5;
+const SIXPMUTC = 15;
+
 class DeliveriesController {
     async index(req, res) {
         const { deliverymanId } = req.params;
@@ -31,6 +34,18 @@ class DeliveriesController {
             return res.status(400).json({ error: "Start date is invalid" });
         }
 
+        const { start_date } = req.body;
+
+        if (start_date) {
+            const startHour = parseISO(start_date).getUTCHours();
+
+            if (startHour < EIGHTAMUTC || startHour >= SIXPMUTC) {
+                return res.status(400).json({
+                    error: "Product can only be withdrawn beetwen 8am and 6pm",
+                });
+            }
+        }
+
         const todayOrders = await Order.findAll({
             where: {
                 deliveryman_id: req.params.deliverymanId,
@@ -46,7 +61,7 @@ class DeliveriesController {
 
         const order = await Order.findByPk(req.params.orderId);
 
-        await order.update({ start_date: req.body.start_date });
+        await order.update({ start_date: start_date });
 
         return res.json(order);
     }

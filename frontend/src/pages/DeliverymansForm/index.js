@@ -1,9 +1,9 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import api from "../../services/api";
 import { useDispatch } from "react-redux";
 import { MdChevronLeft, MdCheck } from "react-icons/md";
 import { FaCamera } from "react-icons/fa";
-import { Form, useField } from "@rocketseat/unform";
+import { Form } from "@rocketseat/unform";
 import * as Yup from "yup";
 
 import { Container, HeaderWrapper, FormWrapper, ImageInput } from "./styles";
@@ -31,20 +31,9 @@ export default function DeliverymansForm(props) {
 
     const [file, setFile] = useState(deliveryman && deliveryman.avatar_id);
     const [preview, setPreview] = useState(deliveryman && deliveryman.avatar);
+    const [isLoading, setIsLoading] = useState(false);
 
     const dispatch = useDispatch();
-
-    function handleSubmit(data) {
-        data.avatar_id = file;
-
-        if (deliveryman) {
-            data.id = deliveryman.id;
-
-            dispatch(deliverymanUpdateRequest(data));
-        } else {
-            dispatch(deliverymanRegisterRequest(data));
-        }
-    }
 
     function getImgComponent() {
         return <img src={preview} alt={""} />;
@@ -72,6 +61,19 @@ export default function DeliverymansForm(props) {
         setPreview(url);
     }
 
+    function handleSubmit(data) {
+        setIsLoading(true);
+        data.avatar_id = file;
+
+        if (deliveryman) {
+            data.id = deliveryman.id;
+
+            dispatch(deliverymanUpdateRequest(data));
+        } else {
+            dispatch(deliverymanRegisterRequest(data));
+        }
+    }
+
     return (
         <Container>
             <Form initialData={deliveryman} onSubmit={handleSubmit} schema={schema}>
@@ -84,7 +86,12 @@ export default function DeliverymansForm(props) {
                         width={"120px"}
                         color={"#7b7b7b"}
                     />
-                    <Button text={"Salvar"} Icon={MdCheck} width={"120px"} type={"submit"} />
+                    <Button
+                        text={isLoading ? "Salvando..." : "Salvar"}
+                        Icon={MdCheck}
+                        width={"120px"}
+                        type={"submit"}
+                    />
                 </HeaderWrapper>
                 <FormWrapper>
                     <ImageInput>
@@ -100,8 +107,8 @@ export default function DeliverymansForm(props) {
                             />
                         </label>
                     </ImageInput>
-                    <StyledInput labelText="Name" name="name" />
-                    <StyledInput labelText="Email" name="email" type="email" />
+                    <StyledInput disabled={isLoading} labelText="Name" name="name" />
+                    <StyledInput disabled={isLoading} labelText="Email" name="email" type="email" />
                 </FormWrapper>
             </Form>
         </Container>

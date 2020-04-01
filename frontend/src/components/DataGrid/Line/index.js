@@ -55,11 +55,7 @@ function Line({ columns, rowData, onView, onEdit, onDelete, onCancel }) {
         );
     }
 
-    return (
-        <tbody>
-            <LineWrapper>{cols}</LineWrapper>
-        </tbody>
-    );
+    return <LineWrapper>{cols}</LineWrapper>;
 }
 
 Line.defaultProps = {

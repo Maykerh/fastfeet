@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
 import Header from "./Header";
@@ -6,9 +6,10 @@ import Line from "./Line";
 
 import Button from "../../components/Button";
 
-import { Container, Controls } from "./styles";
+import { Container, Controls, Pagination } from "./styles";
 
 import { MdAdd, MdSearch } from "react-icons/md";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 export default function DataGrid({
     data,
@@ -22,6 +23,8 @@ export default function DataGrid({
     hideControls,
 }) {
     const [searchDelay, setSearchDelay] = useState(null);
+    const [searchText, setSearchText] = useState(null);
+    const [page, setPage] = useState(1);
 
     function renderLines() {
         return data.map((rowData, index) => (
@@ -42,7 +45,10 @@ export default function DataGrid({
             clearTimeout(searchDelay);
         }
 
-        setSearchDelay(setTimeout(() => onSearch(searchText), 1000));
+        setPage(1);
+        setSearchText(searchText);
+
+        setSearchDelay(setTimeout(() => onSearch(searchText, 1), 1000));
     }
 
     function getControlsCmp() {
@@ -67,7 +73,20 @@ export default function DataGrid({
         );
     }
 
+    function previousPage() {
+        setPage(page - 1);
+        onSearch(searchText, page - 1);
+    }
+
+    function nextPage() {
+        setPage(page + 1);
+        onSearch(searchText, page + 1);
+    }
+
     const hasActions = !!onView || !!onEdit || !!onDelete || !!onCancel;
+
+    const disablePrevious = page === 1;
+    const disableNext = data.length < 10;
 
     return (
         <Container>
@@ -75,9 +94,20 @@ export default function DataGrid({
             <div>
                 <table>
                     <Header columns={columns} hasActions={hasActions} />
-                    {renderLines()}
+                    <tbody>{renderLines()}</tbody>
                 </table>
             </div>
+            <Pagination>
+                <div disabled={disablePrevious} onClick={disablePrevious ? () => {} : previousPage}>
+                    <FaChevronLeft />
+                    <span>Anterior</span>
+                </div>
+                <div id="pipe" />
+                <div disabled={disableNext} onClick={disableNext ? () => {} : nextPage}>
+                    <span>Próxima</span>
+                    <FaChevronRight />
+                </div>
+            </Pagination>
         </Container>
     );
 }

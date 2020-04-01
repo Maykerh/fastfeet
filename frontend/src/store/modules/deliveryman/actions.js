@@ -11,3 +11,10 @@ export function deliverymanUpdateRequest(data) {
         payload: data,
     };
 }
+
+export function deliverymanDeleteRequest(id, callback) {
+    return {
+        type: "@deliveryman/DELETE_REQUEST",
+        payload: { id, callback },
+    };
+}

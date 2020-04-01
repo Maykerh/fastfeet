@@ -19,7 +19,7 @@ export default function Popover({ rowData, onView, onEdit, onDelete, onCancel })
     );
 
     const deleteOption = (
-        <div onClick={() => onEdit(rowData)}>
+        <div onClick={() => onDelete(rowData.id)}>
             <MdDeleteForever size={20} color="#de3b33" /> <span>Excluir</span>
         </div>
     );
