@@ -22,6 +22,20 @@ export const FormWrapper = styled.div`
     border-radius: 5px;
     display: flex;
     flex-direction: column;
+
+    #first-row {
+        display: flex;
+
+        > div:first-child {
+            width: 100%;
+            margin-right: 15px;
+        }
+
+        > div:not(:first-child) {
+            margin-left: 15px;
+            width: 100%;
+        }
+    }
 `;
 
 export const SelectWrapper = styled.div`

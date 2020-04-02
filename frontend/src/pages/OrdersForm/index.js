@@ -99,34 +99,36 @@ export default function OrdersForm(props) {
                     />
                 </HeaderWrapper>
                 <FormWrapper>
-                    <SelectWrapper>
-                        <Label htmlFor={"deliveryman"}>{"Entregador"}</Label>
-                        <AsyncSelect
-                            isSearchable
-                            defaultOptions
-                            defaultValue={{
-                                label: order ? order.deliveryman.name : "",
-                                value: order ? order.deliveryman.id : "",
-                            }}
-                            loadOptions={search => loadDeliverymans(search)}
-                            onChange={selected => setDeliverymanId(selected.value)}
-                            name="deliveryman"
-                        />
-                    </SelectWrapper>
-                    <SelectWrapper>
-                        <Label htmlFor={"recipient"}>{"Destinatário"}</Label>
-                        <AsyncSelect
-                            isSearchable
-                            defaultOptions
-                            defaultValue={{
-                                label: order ? order.recipient.name : "",
-                                value: order ? order.recipient.id : "",
-                            }}
-                            loadOptions={search => loadRecipients(search)}
-                            onChange={selected => setRecipientId(selected.value)}
-                            name="recipient"
-                        />
-                    </SelectWrapper>
+                    <div id="first-row">
+                        <SelectWrapper>
+                            <Label htmlFor={"deliveryman"}>{"Entregador"}</Label>
+                            <AsyncSelect
+                                isSearchable
+                                defaultOptions
+                                defaultValue={{
+                                    label: order ? order.deliveryman.name : "",
+                                    value: order ? order.deliveryman.id : "",
+                                }}
+                                loadOptions={search => loadDeliverymans(search)}
+                                onChange={selected => setDeliverymanId(selected.value)}
+                                name="deliveryman"
+                            />
+                        </SelectWrapper>
+                        <SelectWrapper>
+                            <Label htmlFor={"recipient"}>{"Destinatário"}</Label>
+                            <AsyncSelect
+                                isSearchable
+                                defaultOptions
+                                defaultValue={{
+                                    label: order ? order.recipient.name : "",
+                                    value: order ? order.recipient.id : "",
+                                }}
+                                loadOptions={search => loadRecipients(search)}
+                                onChange={selected => setRecipientId(selected.value)}
+                                name="recipient"
+                            />
+                        </SelectWrapper>
+                    </div>
                     <StyledInput disabled={isLoading} labelText="Nome do produto" name="product" />
                 </FormWrapper>
             </Form>

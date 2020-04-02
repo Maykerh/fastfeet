@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import api from "../../services/api";
 import { useDispatch } from "react-redux";
 import { MdChevronLeft, MdCheck } from "react-icons/md";
@@ -34,6 +34,7 @@ export default function RecipientForm(props) {
 
     const [isLoading, setIsLoading] = useState(false);
 
+    const formRef = useRef(null);
     const dispatch = useDispatch();
 
     function handleSubmit(data) {
@@ -69,22 +70,47 @@ export default function RecipientForm(props) {
                 </HeaderWrapper>
                 <FormWrapper>
                     <StyledInput disabled={isLoading} labelText="Name" name="name" />
-                    <StyledInput disabled={isLoading} labelText="Rua" name="street" type="text" />
-                    <StyledInput
-                        disabled={isLoading}
-                        labelText="Número"
-                        name="number"
-                        type="number"
-                    />
-                    <StyledInput
-                        disabled={isLoading}
-                        labelText="Complemento"
-                        name="complement"
-                        type="text"
-                    />
-                    <StyledInput disabled={isLoading} labelText="Cidade" name="city" type="text" />
-                    <StyledInput disabled={isLoading} labelText="Estado" name="state" type="text" />
-                    <StyledInput disabled={isLoading} labelText="CEP" name="cep" type="text" />
+                    <div id="second-row">
+                        <StyledInput
+                            disabled={isLoading}
+                            labelText="Rua"
+                            name="street"
+                            type="text"
+                        />
+                        <StyledInput
+                            disabled={isLoading}
+                            labelText="Número"
+                            name="number"
+                            type="number"
+                        />
+                        <StyledInput
+                            disabled={isLoading}
+                            labelText="Complemento"
+                            name="complement"
+                            type="text"
+                        />
+                    </div>
+                    <div id="third-row">
+                        <StyledInput
+                            disabled={isLoading}
+                            labelText="Cidade"
+                            name="city"
+                            type="text"
+                        />
+                        <StyledInput
+                            disabled={isLoading}
+                            labelText="Estado"
+                            name="state"
+                            type="text"
+                        />
+                        <StyledInput
+                            disabled={isLoading}
+                            labelText="CEP"
+                            name="cep"
+                            type="text"
+                            ref={formRef}
+                        />
+                    </div>
                 </FormWrapper>
             </Form>
         </Container>

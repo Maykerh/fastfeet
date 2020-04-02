@@ -8,6 +8,7 @@ import api from "../../services/api";
 import ContentHeader from "../../components/ContentHeader";
 import DataGrid from "../../components/DataGrid";
 import Modal from "../../components/Modal";
+import StatusTag from "../../components/StatusTag";
 
 import history from "../../services/history";
 
@@ -25,19 +26,20 @@ export default function Orders() {
     const dispatch = useDispatch();
 
     function getStatus(order) {
+        console.log(order);
         if (order.canceled_at != null) {
-            return "Cancelado";
+            return <StatusTag text={"Cancelada"} color={"#de3d3d"} />;
         }
 
         if (order.end_date) {
-            return "Entregue";
+            return <StatusTag text={"Entregue"} color={"#40ad44"} />;
         }
 
         if (order.start_date) {
-            return "Em rota";
+            return <StatusTag text={"Em rota"} color={"#4f86ed"} />;
         }
 
-        return "Pendente";
+        return <StatusTag text={"Pendente"} color={"#c0bc3a"} />;
     }
 
     async function loadData() {
@@ -55,7 +57,8 @@ export default function Orders() {
             street: order.Recipient.street,
             start_date: order.start_date,
             end_date: order.end_date,
-            status: getStatus(order),
+            canceled_at: order.canceled_at,
+
             signatureUrl: order.signature ? order.signature.url : null,
         }));
 
@@ -130,7 +133,7 @@ export default function Orders() {
                     { field: "deliverymanName", title: "Entregador", width: "100%" },
                     { field: "city", title: "Cidade", width: "100%" },
                     { field: "state", title: "Estado", width: "100%" },
-                    { field: "status", title: "Status", width: "100px" },
+                    { callback: getStatus, title: "Status", width: "100px" },
                 ]}
                 data={orders}
                 onSearch={(text, page) => {

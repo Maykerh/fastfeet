@@ -22,4 +22,29 @@ export const FormWrapper = styled.div`
     border-radius: 5px;
     display: flex;
     flex-direction: column;
+
+    #second-row {
+        display: flex;
+
+        div:first-child {
+            width: 60%;
+        }
+
+        div:not(:first-child) {
+            margin-left: 15px;
+            width: 20%;
+        }
+    }
+
+    #third-row {
+        display: flex;
+
+        > div {
+            width: 100%;
+        }
+
+        > div:not(:first-child) {
+            margin-left: 15px;
+        }
+    }
 `;
