@@ -12,9 +12,9 @@ export function deliverymanUpdateRequest(data) {
     };
 }
 
-export function deliverymanDeleteRequest(id, callback) {
+export function deliverymanDeleteRequest(id) {
     return {
         type: "@deliveryman/DELETE_REQUEST",
-        payload: { id, callback },
+        payload: id,
     };
 }

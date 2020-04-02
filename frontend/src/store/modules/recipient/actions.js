@@ -12,9 +12,9 @@ export function recipientUpdateRequest(data) {
     };
 }
 
-export function recipientDeleteRequest(id, callback) {
+export function recipientDeleteRequest(id) {
     return {
         type: "@recipient/DELETE_REQUEST",
-        payload: { id, callback },
+        payload: id,
     };
 }

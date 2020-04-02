@@ -1,8 +1,6 @@
 import React, { useState, useRef } from "react";
-import api from "../../services/api";
 import { useDispatch } from "react-redux";
 import { MdChevronLeft, MdCheck } from "react-icons/md";
-import { FaCamera } from "react-icons/fa";
 import { Form } from "@rocketseat/unform";
 import * as Yup from "yup";
 

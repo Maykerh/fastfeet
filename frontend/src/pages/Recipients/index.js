@@ -22,25 +22,27 @@ export default function Orders() {
         return `${street}, ${number}, ${city} - ${state}`;
     }
 
-    async function loadData() {
-        const response = await api.get("/recipients", { params: { q: searchText, page: page } });
-
-        const normalizedData = response.data.map(recipient => ({
-            id: recipient.id,
-            name: recipient.name,
-            address: getFormattedAddress(recipient),
-            street: recipient.street,
-            number: recipient.number,
-            state: recipient.state,
-            city: recipient.city,
-            cep: recipient.cep,
-            complement: recipient.complement,
-        }));
-
-        setRecipients(normalizedData);
-    }
-
     useEffect(() => {
+        async function loadData() {
+            const response = await api.get("/recipients", {
+                params: { q: searchText, page: page },
+            });
+
+            const normalizedData = response.data.map(recipient => ({
+                id: recipient.id,
+                name: recipient.name,
+                address: getFormattedAddress(recipient),
+                street: recipient.street,
+                number: recipient.number,
+                state: recipient.state,
+                city: recipient.city,
+                cep: recipient.cep,
+                complement: recipient.complement,
+            }));
+
+            setRecipients(normalizedData);
+        }
+
         loadData();
     }, [page, searchText]);
 
@@ -49,7 +51,7 @@ export default function Orders() {
             return;
         }
 
-        dispatch(recipientDeleteRequest(id, loadData));
+        dispatch(recipientDeleteRequest(id));
     }
 
     return (

@@ -1,4 +1,4 @@
-import { all, call, put, takeLatest } from "redux-saga/effects";
+import { all, call, takeLatest } from "redux-saga/effects";
 import { toast } from "react-toastify";
 
 import history from "../../../services/history";
@@ -6,12 +6,10 @@ import history from "../../../services/history";
 import api from "../../../services/api";
 
 function* deliverymanRegister({ payload }) {
-    var deliveryman = {};
-
     try {
         const { avatar_id, name, email } = payload;
 
-        deliveryman = yield call(api.post, "deliveryman", {
+        yield call(api.post, "deliveryman", {
             avatar_id,
             name,
             email,
@@ -52,20 +50,19 @@ function* deliverymanUpdate({ payload }) {
 }
 
 function* deliverymanDelete({ payload }) {
-    const { id, callback } = payload;
-
     try {
-        yield call(api.delete, `deliveryman/${id}`);
+        yield call(api.delete, `deliveryman/${payload}`);
 
         toast.success("Excluído com sucesso", {});
+
+        history.push("/refresh");
+        history.goBack();
     } catch (err) {
         if (err.response.data.error) {
             toast.error(err.response.data.error);
         } else {
             console.warn(err);
         }
-    } finally {
-        callback();
     }
 }
 

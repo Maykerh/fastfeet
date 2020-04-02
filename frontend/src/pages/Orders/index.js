@@ -42,29 +42,6 @@ export default function Orders() {
         return <StatusTag text={"Pendente"} color={"#c0bc3a"} />;
     }
 
-    async function loadData() {
-        const response = await api.get("/orders", { params: { q: searchText, page: page } });
-
-        const normalizedData = response.data.map(order => ({
-            id: order.id,
-            product: order.product,
-            recipientName: order.Recipient.name,
-            recipient: order.Recipient,
-            deliverymanName: order.Deliveryman.name,
-            deliveryman: order.Deliveryman,
-            city: order.Recipient.city,
-            state: order.Recipient.state,
-            street: order.Recipient.street,
-            start_date: order.start_date,
-            end_date: order.end_date,
-            canceled_at: order.canceled_at,
-
-            signatureUrl: order.signature ? order.signature.url : null,
-        }));
-
-        setOrders(normalizedData);
-    }
-
     function onView(orderData) {
         setIsModalOpen(true);
         setSelectedOrderData(orderData);
@@ -115,10 +92,33 @@ export default function Orders() {
             return;
         }
 
-        dispatch(orderDeleteRequest(id, loadData));
+        dispatch(orderDeleteRequest(id));
     }
 
     useEffect(() => {
+        async function loadData() {
+            const response = await api.get("/orders", { params: { q: searchText, page: page } });
+
+            const normalizedData = response.data.map(order => ({
+                id: order.id,
+                product: order.product,
+                recipientName: order.Recipient.name,
+                recipient: order.Recipient,
+                deliverymanName: order.Deliveryman.name,
+                deliveryman: order.Deliveryman,
+                city: order.Recipient.city,
+                state: order.Recipient.state,
+                street: order.Recipient.street,
+                start_date: order.start_date,
+                end_date: order.end_date,
+                canceled_at: order.canceled_at,
+
+                signatureUrl: order.signature ? order.signature.url : null,
+            }));
+
+            setOrders(normalizedData);
+        }
+
         loadData();
     }, [page, searchText]);
 

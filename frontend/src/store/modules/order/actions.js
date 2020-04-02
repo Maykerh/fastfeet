@@ -12,9 +12,9 @@ export function orderUpdateRequest(data) {
     };
 }
 
-export function orderDeleteRequest(id, callback) {
+export function orderDeleteRequest(id) {
     return {
         type: "@order/DELETE_REQUEST",
-        payload: { id, callback },
+        payload: id,
     };
 }

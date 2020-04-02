@@ -1,4 +1,4 @@
-import { all, call, put, takeLatest } from "redux-saga/effects";
+import { all, call, takeLatest } from "redux-saga/effects";
 import { toast } from "react-toastify";
 
 import history from "../../../services/history";
@@ -58,20 +58,19 @@ function* recipientUpdate({ payload }) {
 }
 
 function* recipientDelete({ payload }) {
-    const { id, callback } = payload;
-
     try {
-        yield call(api.delete, `recipients/${id}`);
+        yield call(api.delete, `recipients/${payload}`);
 
         toast.success("Excluído com sucesso", {});
+
+        history.push("/refresh");
+        history.goBack();
     } catch (err) {
         if (err.response.data.error) {
             toast.error(err.response.data.error);
         } else {
             console.warn(err);
         }
-    } finally {
-        callback();
     }
 }
 

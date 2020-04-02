@@ -23,21 +23,7 @@ export default function Deliverymans() {
             return;
         }
 
-        dispatch(deliverymanDeleteRequest(id, loadData));
-    }
-
-    async function loadData() {
-        const response = await api.get("/deliveryman", { params: { q: searchText, page: page } });
-
-        const normalizedData = response.data.map(deliveryman => ({
-            id: deliveryman.id,
-            avatar: deliveryman.avatar ? deliveryman.avatar.url : null,
-            avatar_id: deliveryman.avatar ? deliveryman.avatar.id : null,
-            name: deliveryman.name,
-            email: deliveryman.email,
-        }));
-
-        setDeliverymans(normalizedData);
+        dispatch(deliverymanDeleteRequest(id));
     }
 
     function getImage(rowData) {
@@ -47,6 +33,22 @@ export default function Deliverymans() {
     }
 
     useEffect(() => {
+        async function loadData() {
+            const response = await api.get("/deliveryman", {
+                params: { q: searchText, page: page },
+            });
+
+            const normalizedData = response.data.map(deliveryman => ({
+                id: deliveryman.id,
+                avatar: deliveryman.avatar ? deliveryman.avatar.url : null,
+                avatar_id: deliveryman.avatar ? deliveryman.avatar.id : null,
+                name: deliveryman.name,
+                email: deliveryman.email,
+            }));
+
+            setDeliverymans(normalizedData);
+        }
+
         loadData();
     }, [page, searchText]);
 

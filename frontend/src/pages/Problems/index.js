@@ -30,19 +30,6 @@ export default function Problems() {
         return newDescription + "...";
     }
 
-    async function loadData() {
-        const response = await api.get("/delivery/problems", { params: { page: page } });
-
-        const normalizedData = response.data.map(problem => ({
-            orderId: problem.delivery_id,
-            id: problem.id,
-            description: normalizeDescription(problem.description),
-            order_canceled_at: problem.Order.canceled_at,
-        }));
-
-        setProblems(normalizedData);
-    }
-
     function onView(problemData) {
         setIsModalOpen(true);
         setSelectedProblemData(problemData);
@@ -71,12 +58,25 @@ export default function Problems() {
             return;
         }
 
-        dispatch(cancelDeliveryRequest(problemData.id, loadData));
+        dispatch(cancelDeliveryRequest(problemData.id));
     }
 
     useEffect(() => {
+        async function loadData() {
+            const response = await api.get("/delivery/problems", { params: { page: page } });
+
+            const normalizedData = response.data.map(problem => ({
+                orderId: problem.delivery_id,
+                id: problem.id,
+                description: normalizeDescription(problem.description),
+                order_canceled_at: problem.Order.canceled_at,
+            }));
+
+            setProblems(normalizedData);
+        }
+
         loadData();
-    }, [page]);
+    }, [page, setPage]);
 
     return (
         <div>

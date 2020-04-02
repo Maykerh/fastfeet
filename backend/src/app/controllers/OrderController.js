@@ -4,6 +4,7 @@ import pt from "date-fns/locale/pt";
 import Order from "../models/Order";
 import Recipient from "../models/Recipient";
 import Deliveryman from "../models/Deliveryman";
+import DeliveryProblems from "../models/DeliveryProblems";
 import File from "../models/File";
 import Mail from "../../lib/mail";
 import { Op } from "sequelize";
@@ -127,9 +128,7 @@ class OrderController {
     async delete(req, res) {
         const order = await Order.findByPk(req.params.id);
 
-        order.canceled_at = new Date();
-
-        await order.save();
+        await order.destroy();
 
         return res.json(order);
     }
