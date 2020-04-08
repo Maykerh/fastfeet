@@ -7,8 +7,10 @@ export function* signIn({ payload }) {
     try {
         const id = payload;
 
-        const response = yield call(api.get, `deliverymans/${id}`);
-
+        console.tron.log('response');
+        const response = yield call(api.get, `deliveryman/${id}`);
+        console.tron.log('responsew 2');
+        console.tron.log(response);
         const deliveryman = response.data;
 
         if (!deliveryman) {
