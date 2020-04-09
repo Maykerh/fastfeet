@@ -66,7 +66,7 @@ export default ({ item, onViewDetails }) => {
                 </View>
                 <ViewDetailsText
                     canceled={isCanceled}
-                    onClick={() => onViewDetails(item)}>
+                    onPress={() => onViewDetails(item)}>
                     Ver detalhes
                 </ViewDetailsText>
             </OrderFooter>

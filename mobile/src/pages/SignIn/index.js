@@ -4,12 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import Button from '../../components/Button';
 
-import { Container, Form, FormInput, Logo, LogoWrapper } from './styles';
+import { Container, Form, FormInput, LogoWrapper } from './styles';
 
 import { signInRequest } from '../../store/modules/auth/actions';
 import logo from '../../assets/logo.png';
-
-import api from '../../services/api';
 
 export default function SignIn({ navigation }) {
     const signed = useSelector((state) => state.auth.signed);

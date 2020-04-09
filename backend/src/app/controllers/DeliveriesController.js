@@ -1,5 +1,6 @@
 import Order from "../models/Order";
 import File from "../models/File";
+import Recipient from "../models/Recipient";
 import { Op } from "sequelize";
 import * as Yup from "yup";
 import { endOfDay, startOfDay, isBefore, parseISO } from "date-fns";
@@ -10,14 +11,27 @@ const SIXPMUTC = 15;
 class DeliveriesController {
     async index(req, res) {
         const { deliverymanId } = req.params;
-        const { showFinished } = req.query;
+        const { showFinished, showCanceled, page = 1 } = req.query;
 
         const queryParams = {
+            limit: 10,
+            offset: (page - 1) * 10,
+            order: [["id", "ASC"]],
             where: { deliveryman_id: deliverymanId, canceled_at: null, end_date: null },
+            include: [
+                { model: Recipient },
+                {
+                    model: File,
+                    as: "signature",
+                    attributes: ["name", "path", "url"],
+                },
+            ],
         };
 
-        if (showFinished === 1) {
+        if (parseInt(showFinished) === 1) {
             queryParams.where.end_date = { [Op.ne]: null };
+        } else if (parseInt(showCanceled) === 1) {
+            queryParams.where.canceled_at = { [Op.ne]: null };
         }
 
         const deliveryManOrders = await Order.findAll(queryParams);

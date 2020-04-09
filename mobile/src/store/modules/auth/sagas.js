@@ -7,10 +7,7 @@ export function* signIn({ payload }) {
     try {
         const id = payload;
 
-        console.tron.log('response');
         const response = yield call(api.get, `deliveryman/${id}`);
-        console.tron.log('responsew 2');
-        console.tron.log(response);
         const deliveryman = response.data;
 
         if (!deliveryman) {
@@ -31,7 +28,4 @@ export function* signIn({ payload }) {
     }
 }
 
-export default all([
-    // takeLatest('persist/REHYDRATE', setToken),
-    takeLatest('@auth/SIGN_IN_REQUEST', signIn),
-]);
+export default all([takeLatest('@auth/SIGN_IN_REQUEST', signIn)]);

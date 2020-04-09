@@ -39,7 +39,7 @@ export default function Orders() {
             return <StatusTag text={"Em rota"} color={"#4f86ed"} />;
         }
 
-        return <StatusTag text={"Pendente"} color={"#c0bc3a"} />;
+        return <StatusTag text={"Pendente"} color={"#ffbc00"} />;
     }
 
     function onView(orderData) {

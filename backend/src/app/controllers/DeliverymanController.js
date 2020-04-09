@@ -5,6 +5,22 @@ import { Op } from "sequelize";
 
 class DeliverymanController {
     async index(req, res) {
+        const { deliverymanId } = req.params;
+
+        if (deliverymanId) {
+            const deliveryman = await Deliveryman.findByPk(deliverymanId, {
+                include: [
+                    {
+                        model: File,
+                        as: "avatar",
+                        attributes: ["id", "path", "url"],
+                    },
+                ],
+            });
+
+            return res.json(deliveryman);
+        }
+
         const { page = 1, q: name } = req.query;
 
         const queryParams = {

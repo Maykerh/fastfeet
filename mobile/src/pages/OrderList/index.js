@@ -86,11 +86,15 @@ export default ({ navigation }) => {
         setRefreshing(true);
     }
 
+    function handleNavigateBack() {
+        setReloadTrigger(reloadTrigger + 1);
+    }
+
     return (
         <Container>
             <Header>
                 <Avatar
-                    url={null}
+                    url={deliveryman.avatar ? deliveryman.avatar.url : null}
                     width={80}
                     height={80}
                     userName={deliveryman.name}
@@ -169,6 +173,9 @@ export default ({ navigation }) => {
                                     onViewDetails={() =>
                                         navigation.navigate('OrderDetails', {
                                             item,
+                                            onNavigateBack: handleNavigateBack.bind(
+                                                this
+                                            ),
                                         })
                                     }
                                 />
