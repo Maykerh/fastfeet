@@ -39,9 +39,9 @@ export default function Profile({ navigation }) {
                 <InfoWrapper>
                     <InfoLabel>Nome completo</InfoLabel>
                     <InfoText>{deliveryman.name}</InfoText>
-                    <InfoLabel>Nome completo</InfoLabel>
+                    <InfoLabel>Email</InfoLabel>
                     <InfoText>{deliveryman.email}</InfoText>
-                    <InfoLabel>Nome completo</InfoLabel>
+                    <InfoLabel>Data de cadastro</InfoLabel>
                     <InfoText>
                         {deliveryman.createdAt &&
                             format(
