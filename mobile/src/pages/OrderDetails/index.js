@@ -35,10 +35,10 @@ function OrderDetails({ route, navigation }) {
         : null;
 
     const end_date = item.end_date
-        ? format(parseISO(item.start_date), 'dd/MM/yyyy')
+        ? format(parseISO(item.end_date), 'dd/MM/yyyy')
         : null;
 
-    const showWithdrawBtn = !item.start_date && !item.canceled_at;
+    const showWithdrawBtn = !item.start_date;
 
     const showActionButtons =
         item.start_date && !item.canceled_at && !item.end_date;
@@ -154,7 +154,7 @@ function OrderDetails({ route, navigation }) {
                     <ActionsWrapper>
                         <ActionButton
                             onPress={() =>
-                                navigation.navigate('ReportProblem', {
+                                navigation.navigate('ProblemReport', {
                                     item,
                                 })
                             }>
@@ -163,7 +163,7 @@ function OrderDetails({ route, navigation }) {
                         </ActionButton>
                         <ActionButton
                             onPress={() =>
-                                navigation.navigate('ViewProblem', {
+                                navigation.navigate('ProblemView', {
                                     item,
                                 })
                             }>
@@ -172,7 +172,7 @@ function OrderDetails({ route, navigation }) {
                         </ActionButton>
                         <ActionButton
                             onPress={() =>
-                                navigation.navigate('ConfirmDelivery', {
+                                navigation.navigate('FinishOrder', {
                                     item,
                                 })
                             }>
@@ -181,7 +181,7 @@ function OrderDetails({ route, navigation }) {
                                 size={30}
                                 color="#7e42e6"
                             />
-                            <ButtonText>{'Confirmar\nEntrega'}</ButtonText>
+                            <ButtonText>{'Finalizar\nEntrega'}</ButtonText>
                         </ActionButton>
                     </ActionsWrapper>
                 )}

@@ -1095,6 +1095,11 @@
     color "^3.1.2"
     react-native-iphone-x-helper "^1.2.1"
 
+"@react-navigation/compat@^5.1.8":
+  version "5.1.8"
+  resolved "https://registry.yarnpkg.com/@react-navigation/compat/-/compat-5.1.8.tgz#1efefc73c5b719f6b278e81e30662cad4c5a9e22"
+  integrity sha512-+RmzId97Isflx8nOoHZGxbEf00BMY4jDSECcl7lus78mKj/QeheJLthvWlMjcqYRLksgIYY3DG3TrfRkB/QThw==
+
 "@react-navigation/core@^5.3.2":
   version "5.3.2"
   resolved "https://registry.yarnpkg.com/@react-navigation/core/-/core-5.3.2.tgz#f3a1190b03dc32a26de2d69659a1509662c85e33"
@@ -5618,6 +5623,13 @@ react-is@^16.12.0, react-is@^16.13.0, react-is@^16.6.0, react-is@^16.7.0, react-
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
+
+react-native-camera@^3.22.1:
+  version "3.22.1"
+  resolved "https://registry.yarnpkg.com/react-native-camera/-/react-native-camera-3.22.1.tgz#3b8616b3ad76651b4c98d32011218d2021a57586"
+  integrity sha512-KMi/pagWz9ssODghHHKXypukTFpM14T62ZNbd/UriZZSnvdQxXrddJhwQpH3cnZS2kl03Jupu52vi4AvT36Feg==
+  dependencies:
+    prop-types "^15.6.2"
 
 react-native-gesture-handler@^1.5.0:
   version "1.6.1"

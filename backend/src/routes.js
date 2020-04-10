@@ -25,6 +25,7 @@ routes.put("/deliveryman/:deliverymanId/deliveries/start/:orderId", DeliveriesCo
 routes.put("/deliveryman/:deliverymanId/deliveries/finish/:orderId", DeliveriesController.finish);
 
 routes.post("/delivery/:id/problems", DeliveryProblemsController.store);
+routes.get("/delivery/:id/problems", DeliveryProblemsController.indexByDelivery);
 
 /**
  * Rotas com autenticação
@@ -52,7 +53,6 @@ routes.put("/orders/:id", OrderController.update);
 routes.delete("/orders/:id", OrderController.delete);
 
 routes.get("/delivery/problems", DeliveryProblemsController.index);
-routes.get("/delivery/:id/problems", DeliveryProblemsController.indexByDelivery);
 
 routes.put("/problem/:id/cancel-delivery", DeliveryProblemsController.cancelDelivery);
 

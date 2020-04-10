@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { ActivityIndicator } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
+import { withNavigationFocus } from '@react-navigation/compat';
+
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { format, parseISO } from 'date-fns';
 
@@ -24,12 +26,12 @@ import {
     GridFilters,
     FilterButton,
     GridBody,
-    OrderList,
+    StyledOrderList,
     EmptyState,
     EmptyStateText,
 } from './styles';
 
-export default ({ navigation }) => {
+function OrderList({ navigation, isFocused }) {
     const deliveryman = useSelector((state) => state.auth.deliveryman);
     const [orders, setOrders] = useState([]);
     const [filter, setFilter] = useState('pending');
@@ -95,8 +97,8 @@ export default ({ navigation }) => {
             <Header>
                 <Avatar
                     url={deliveryman.avatar ? deliveryman.avatar.url : null}
-                    width={80}
-                    height={80}
+                    width={'80px'}
+                    height={'80px'}
                     userName={deliveryman.name}
                 />
                 <HeaderTextWrapper>
@@ -142,7 +144,7 @@ export default ({ navigation }) => {
                             </EmptyStateText>
                         </EmptyState>
                     ) : (
-                        <OrderList
+                        <StyledOrderList
                             key="orderList"
                             data={orders}
                             keyExtractor={(item) => String(item.id)}
@@ -186,4 +188,8 @@ export default ({ navigation }) => {
             </Grid>
         </Container>
     );
+}
+OrderList.defaultProps = {
+    isFocused: false,
 };
+export default withNavigationFocus(OrderList);

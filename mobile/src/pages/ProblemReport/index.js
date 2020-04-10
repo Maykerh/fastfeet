@@ -13,7 +13,7 @@ import {
     ProblemInput,
 } from './styles';
 
-export default function ReportProblem({ route, navigation }) {
+export default function ProblemReport({ route, navigation }) {
     const { item } = route.params;
     const [loading, setLoading] = useState(false);
     const [problemDescription, setProblemDescription] = useState('');

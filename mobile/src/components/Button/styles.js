@@ -5,6 +5,7 @@ export const Container = styled(RectButton)`
     height: 56px;
     background-color: ${(props) => (props.color ? props.color : '#3b9eff')};
     border-radius: 4px;
+    width: 100%;
 
     align-items: center;
     justify-content: center;

@@ -3,10 +3,11 @@ import { Text } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import OrderList from '../pages/OrderList';
 import OrderDetails from '../pages/OrderDetails';
-import ReportProblem from '../pages/ReportProblem';
+import ProblemReport from '../pages/ProblemReport';
+import ProblemView from '../pages/ProblemView';
+import FinishOrder from '../pages/FinishOrder';
 
 const Stack = createStackNavigator();
-const fakeComp = () => <Text>FAKE COMP</Text>;
 
 export default () => {
     return (
@@ -30,8 +31,8 @@ export default () => {
                 }}
             />
             <Stack.Screen
-                name="ReportProblem"
-                component={ReportProblem}
+                name="ProblemReport"
+                component={ProblemReport}
                 options={{
                     headerTitleAlign: 'center',
                     headerTitle: 'Reportar um problema',
@@ -43,41 +44,26 @@ export default () => {
                 }}
             />
             <Stack.Screen
-                name="ViewProblem"
-                component={fakeComp}
+                name="ProblemView"
+                component={ProblemView}
                 options={{
                     headerShown: true,
                     headerTitle: 'Visualizar problemas',
                     headerStyle: {
                         backgroundColor: '#7D40E7',
                         elevation: 0,
-                        height: 150,
-                    },
-                    headerLeftContainerStyle: {
-                        paddingBottom: 70,
-                    },
-                    headerTitleContainerStyle: {
-                        paddingBottom: 70,
                     },
                     headerTintColor: '#fff',
                 }}
             />
             <Stack.Screen
-                name="ConfirmDelivery"
-                component={fakeComp}
+                name="FinishOrder"
+                component={FinishOrder}
                 options={{
                     headerShown: true,
-                    headerTitle: 'Confirmar entrega',
+                    headerTitle: 'Finalizar entrega',
                     headerStyle: {
                         backgroundColor: '#7D40E7',
-                        elevation: 0,
-                        height: 150,
-                    },
-                    headerLeftContainerStyle: {
-                        paddingBottom: 70,
-                    },
-                    headerTitleContainerStyle: {
-                        paddingBottom: 70,
                     },
                     headerTintColor: '#fff',
                 }}

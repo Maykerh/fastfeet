@@ -1,12 +1,11 @@
 import styled from 'styled-components/native';
 
-import { TouchableOpacity, View, Text } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 
 export const Container = styled.View`
     flex: 1;
     align-items: center;
     padding: 0 30px;
-    background-color: #f5f5f5;
 `;
 
 export const Header = styled.View`
@@ -76,7 +75,7 @@ export const GridBody = styled.View`
     height: auto;
 `;
 
-export const OrderList = styled.FlatList.attrs({
+export const StyledOrderList = styled.FlatList.attrs({
     showsVerticalScrollIndicator: false,
 })`
     /* margin-bottom: 200px; */
