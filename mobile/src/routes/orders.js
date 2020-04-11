@@ -64,6 +64,7 @@ export default () => {
                     headerTitle: 'Finalizar entrega',
                     headerStyle: {
                         backgroundColor: '#7D40E7',
+                        elevation: 0,
                     },
                     headerTintColor: '#fff',
                 }}

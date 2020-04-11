@@ -1,11 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { RNCamera } from 'react-native-camera';
-import { format, parseISO } from 'date-fns';
-import { View, TouchableOpacity, Text } from 'react-native';
-import PropTypes from 'prop-types';
+import { View, Alert, Text, Modal } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import api from '../../services/api';
-import { withNavigationFocus } from '@react-navigation/compat';
 
 import Button from '../../components/Button';
 
@@ -23,6 +21,7 @@ import {
 } from './styles';
 
 function FinishOrder({ route, navigation }) {
+    const deliveryman = useSelector((state) => state.auth.deliveryman);
     const { item } = route.params;
     const [image, setImage] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -34,14 +33,11 @@ function FinishOrder({ route, navigation }) {
 
             formData.append('file', {
                 type: 'image/jpeg',
-                uri:
-                    Platform.OS === 'android'
-                        ? picture
-                        : picture.replace('file://', ''),
-                name: image.split('/')[9],
+                uri: image.uri,
+                name: image.name,
             });
 
-            const response = await api.post('files', data);
+            const response = await api.post('files', formData);
 
             await api.put(
                 `deliveryman/${deliveryman.id}/deliveries/finish/${item.id}`,
@@ -53,22 +49,25 @@ function FinishOrder({ route, navigation }) {
 
             Alert.alert('Sucesso!', 'Entrega finalizada');
 
-            navigation.goBack();
+            navigation.navigate('OrderList');
+            // route.params.onNavigateBack();
         } catch (error) {
             Alert.alert('Ocorreu um erro!', 'Tente novamente');
         }
 
         setLoading(false);
     }
+
     const PendingView = () => (
         <View
             style={{
                 flex: 1,
-                backgroundColor: 'lightgreen',
+                width: '100%',
+                backgroundColor: '#f5f5f5',
                 justifyContent: 'center',
                 alignItems: 'center',
             }}>
-            <Text>Waiting</Text>
+            <Text>Aguardando</Text>
         </View>
     );
 
@@ -77,7 +76,17 @@ function FinishOrder({ route, navigation }) {
 
         const data = await camera.takePictureAsync(options);
 
-        setImage(data.uri);
+        var image = null;
+
+        if (data) {
+            const uriArr = data.uri.split('/');
+            image = {
+                uri: data.uri,
+                name: uriArr[uriArr.length - 1],
+            };
+        }
+
+        setImage(image);
     };
 
     return (
@@ -85,7 +94,7 @@ function FinishOrder({ route, navigation }) {
             <BackgroundColor />
             <ContentWrapper>
                 <CameraContainer>
-                    {image ? (
+                    {image && (
                         <PrevieWrapper>
                             <PreviewButtonWrapper>
                                 <PreviewBtn onPress={() => setImage(null)}>
@@ -96,7 +105,7 @@ function FinishOrder({ route, navigation }) {
                                     />
                                 </PreviewBtn>
                             </PreviewButtonWrapper>
-                            <ImagePreview source={{ uri: image }} />
+                            <ImagePreview source={{ uri: image.uri }} />
                             <Button
                                 color={'#7e42e6'}
                                 disabled
@@ -105,13 +114,19 @@ function FinishOrder({ route, navigation }) {
                                 Finalizar Entrega
                             </Button>
                         </PrevieWrapper>
-                    ) : (
+                    )}
+                    <Modal
+                        visible={!image ? true : false}
+                        transparent={false}
+                        animationType="slide"
+                        onRequestClose={() => {
+                            Alert('a');
+                        }}>
                         <RNCamera
                             style={{
                                 flex: 1,
                                 justifyContent: 'flex-end',
                                 alignItems: 'center',
-                                width: '100%',
                             }}
                             captureAudio={false}
                             type={RNCamera.Constants.Type.back}
@@ -132,7 +147,7 @@ function FinishOrder({ route, navigation }) {
                                 );
                             }}
                         </RNCamera>
-                    )}
+                    </Modal>
                 </CameraContainer>
             </ContentWrapper>
         </Container>

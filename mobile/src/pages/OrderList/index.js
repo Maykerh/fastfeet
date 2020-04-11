@@ -49,6 +49,13 @@ function OrderList({ navigation, isFocused }) {
     }
 
     useEffect(() => {
+        navigation.addListener('focus', () => {
+            setPage(1);
+            setReloadTrigger(reloadTrigger + 1);
+        });
+    }, []);
+
+    useEffect(() => {
         async function loadData() {
             setLoading(true);
 
@@ -83,13 +90,9 @@ function OrderList({ navigation, isFocused }) {
     }, [filter, page, reloadTrigger]);
 
     function handFilterChange(filter) {
-        setFilter(filter);
         setPage(1);
+        setFilter(filter);
         setRefreshing(true);
-    }
-
-    function handleNavigateBack() {
-        setReloadTrigger(reloadTrigger + 1);
     }
 
     return (
@@ -175,9 +178,6 @@ function OrderList({ navigation, isFocused }) {
                                     onViewDetails={() =>
                                         navigation.navigate('OrderDetails', {
                                             item,
-                                            onNavigateBack: handleNavigateBack.bind(
-                                                this
-                                            ),
                                         })
                                     }
                                 />

@@ -9,8 +9,6 @@ export default function Avatar({ url, width, height, userName }) {
     const genericImageUrl = `https://ui-avatars.com/api/?name=${urlName}`;
     const finalUrl = url || genericImageUrl;
 
-    console.tron.log(finalUrl);
-
     return (
         <UserAvatar width={width} height={height} source={{ uri: finalUrl }} />
     );

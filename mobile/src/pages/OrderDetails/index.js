@@ -76,17 +76,20 @@ function OrderDetails({ route, navigation }) {
     async function withdraw() {
         setLoading(true);
 
-        await api.put(
-            `deliveryman/${deliverymanId}/deliveries/start/${item.id}`,
-            { start_date: new Date(2020, 8, 4, 11) }
-        );
-        alert('deu');
+        try {
+            await api.put(
+                `deliveryman/${deliverymanId}/deliveries/start/${item.id}`,
+                { start_date: new Date() }
+            );
+
+            Alert.alert('Sucesso', 'Encomenda retirada');
+
+            navigation.navigate('OrderList');
+        } catch (error) {
+            Alert.alert('Ops!', error.response.data.error);
+        }
+
         setLoading(false);
-
-        Alert.alert('Sucesso', 'Encomenda retirada');
-
-        route.params.onNavigateBack();
-        navigation.navigate('OrderList');
     }
 
     return (

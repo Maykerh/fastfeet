@@ -5,8 +5,8 @@ import { Op } from "sequelize";
 import * as Yup from "yup";
 import { endOfDay, startOfDay, isBefore, parseISO } from "date-fns";
 
-const EIGHTAMUTC = 5;
-const SIXPMUTC = 15;
+const EIGHT_AM_UTC = 11;
+const SIX_PM_UTC = 21;
 
 class DeliveriesController {
     async index(req, res) {
@@ -53,7 +53,7 @@ class DeliveriesController {
         if (start_date) {
             const startHour = parseISO(start_date).getUTCHours();
 
-            if (startHour < EIGHTAMUTC || startHour >= SIXPMUTC) {
+            if (startHour < EIGHT_AM_UTC || startHour >= SIX_PM_UTC) {
                 return res.status(400).json({
                     error: "Product can only be withdrawn beetwen 8am and 6pm",
                 });
