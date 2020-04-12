@@ -1,5 +1,4 @@
 node_modules
-src/config/*
 tmp/*
 .env
 yarn-error.log
