@@ -26,10 +26,77 @@ First of all, you need to clone the repository
 git clone https://github.com/Maykerh/fastfeet.git
 ```
 
-Install the Postgre database, in this case <a href="https://www.docker.com/get-started" target="_blank" >
+Next, you'll need a Postgre database, in this case we will be using <a href="https://www.docker.com/get-started" target="_blank" >
   Docker
-</a>  will be used 
+</a>. Run the comand below to create a Postgre image
 
+```bash
+docker run --name mypostgre -e POSTGRES_PASSWORD=password -p 5432:5432 -d postgres
+```
 
+And run this command to start a container
+```bash
+docker start mypostgre
+```
 
+### Backend
 
+To start the backend, from the project root access the backend folder and install the dependencies
+
+```bash
+cd backend
+
+yarn install
+```
+
+After all the dependencies installed, you need to configure a .env file with your environment variables,  use the .env.example file to fill the variables correctly
+
+With the environment variables set, prepare the database with the commands below
+
+```bash
+yarn sequelize db:migrate
+
+yarn sequelize db:seed:all
+```
+
+And then, start the server
+
+```bash
+yarn dev
+```
+
+All done, the api should be working now.
+
+### Frontend
+
+To start the frontend, from the project root access the frontend folder and install the dependencies
+
+```bash
+cd frontend
+
+yarn install
+```
+
+Then, start the server
+
+```bash
+yarn start
+```
+
+You can use the default admin account to login in the application
+
+```bash
+Login: admin@fastfeet.com
+
+Password: 123456
+```
+
+### Mobile
+
+To start the mobile, from the project root access the mobile folder and install the dependencies
+
+```bash
+cd mobile
+
+yarn install
+```
