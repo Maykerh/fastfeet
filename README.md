@@ -8,16 +8,6 @@
    FastFeet is a complete delivery system, that consists in an API, a web application where the company can manage everything related to the orders, and it also have a mobile app that is used by the deliverymans to manage the delivery status 
 </h4>
 
-## :framed_picture: System Images
-
-#### Web
-
-Imagens do web
-
-#### Mobile
-
-Imagens do mobile
-
 ## :floppy_disk: Installation and Execution
 
 First of all, you need to clone the repository
@@ -41,7 +31,7 @@ docker start mypostgre
 
 ### Backend
 
-To start the backend, from the project root access the backend folder and install the dependencies
+To start the backend, from the project root, access the backend folder and install the dependencies
 
 ```bash
 cd backend
@@ -69,12 +59,19 @@ All done, the api should be working now.
 
 ### Frontend
 
-To start the frontend, from the project root access the frontend folder and install the dependencies
+To start the frontend, from the project root, access the frontend folder and install the dependencies
 
 ```bash
 cd frontend
 
 yarn install
+```
+Edit the file src\services\api.js and change the baseURL to match your server url
+
+```bash
+const api = axios.create({
+    baseURL: "http://localhost:3333",
+});
 ```
 
 Then, start the server
@@ -91,12 +88,29 @@ Login: admin@fastfeet.com
 Password: 123456
 ```
 
-### Mobile
+### Mobile (Android only)
 
-To start the mobile, from the project root access the mobile folder and install the dependencies
+To start the mobile, from the project root, access the mobile folder and install the dependencies
 
 ```bash
 cd mobile
 
 yarn install
 ```
+
+Edit the file src\services\api.js and change the baseURL to match your server url
+
+Note: If your server is running on localhost, use the machine IP, if you use "localhost" as the url, maybe the images won't load in the app
+
+```bash
+const api = axios.create({
+    baseURL: "http://192.168.1.0:3333",
+});
+```
+
+Then connect your device or emulator and start the server 
+
+```bash
+yarn start
+```
+
