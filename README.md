@@ -5,7 +5,7 @@
 ## :computer: Project description
 
 <h4>
-   FastFeet is a complete delivery system, that consists in an API, a web application where the company can manage everything related to the orders, and it also have a mobile app that is used by the deliverymans to manage the delivery status 
+   FastFeet is a complete delivery system, that consists in a web application where the administrator can manage everything related to the deliveries, and it also have a mobile app that is used by the deliverymans to manage the delivery status
 </h4>
 
 ## :floppy_disk: Installation and Execution
