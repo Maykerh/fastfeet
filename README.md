@@ -4,7 +4,7 @@
 
 ## :computer: Project description
 
-<h4>
+<h4 align="center">
    FastFeet is a complete delivery system, that consists in a web application where the administrator can manage everything related to the deliveries, and it also have a mobile app that is used by the deliverymans to manage the delivery status
 </h4>
 
