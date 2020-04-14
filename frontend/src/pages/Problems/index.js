@@ -36,14 +36,14 @@ export default function Problems() {
     }
 
     function getViewContent() {
-        const { problem } = selectedProblemData;
+        const { fullDescription } = selectedProblemData;
 
         return (
             <ModalContent>
                 <p>
                     <strong>Detalhes do problema</strong>
                 </p>
-                <p>{problem}</p>
+                <p>{fullDescription ? fullDescription : ""}</p>
             </ModalContent>
         );
     }
@@ -69,6 +69,7 @@ export default function Problems() {
                 orderId: problem.delivery_id,
                 id: problem.id,
                 description: normalizeDescription(problem.description),
+                fullDescription: problem.description,
                 order_canceled_at: problem.Order.canceled_at,
             }));
 

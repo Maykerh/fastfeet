@@ -37,7 +37,7 @@ export default function RecipientForm(props) {
 
     function handleSubmit(data) {
         setIsLoading(true);
-        console.log(data);
+
         if (recipient) {
             data.id = recipient.id;
 

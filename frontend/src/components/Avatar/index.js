@@ -4,8 +4,6 @@ import PropTypes from "prop-types";
 import { Container } from "./styles";
 
 export default function Avatar({ url, width, height, userName }) {
-    console.log(url);
-    console.log(userName);
     const urlName = userName.split(" ").join("+");
     const genericImageUrl = `https://ui-avatars.com/api/?name=${urlName}`;
 

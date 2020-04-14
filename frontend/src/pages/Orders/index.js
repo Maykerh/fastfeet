@@ -26,7 +26,6 @@ export default function Orders() {
     const dispatch = useDispatch();
 
     function getStatus(order) {
-        console.log(order);
         if (order.canceled_at != null) {
             return <StatusTag text={"Cancelada"} color={"#de3d3d"} />;
         }

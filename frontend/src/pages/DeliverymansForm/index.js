@@ -107,7 +107,7 @@ export default function DeliverymansForm(props) {
                             />
                         </label>
                     </ImageInput>
-                    <StyledInput disabled={isLoading} labelText="Name" name="name" />
+                    <StyledInput disabled={isLoading} labelText="Nome" name="name" />
                     <StyledInput disabled={isLoading} labelText="Email" name="email" type="email" />
                 </FormWrapper>
             </Form>
