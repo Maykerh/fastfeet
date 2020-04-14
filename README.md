@@ -111,6 +111,6 @@ const api = axios.create({
 Then connect your device or emulator and start the server 
 
 ```bash
-yarn start
+react-native run-android
 ```
 
