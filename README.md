@@ -41,6 +41,8 @@ yarn install
 
 After all the dependencies installed, you need to configure a .env file with your environment variables,  use the .env.example file to fill the variables correctly
 
+If your server is running on localhost, use the machine IP as the APP_URL, if you use "localhost", maybe the images won't load in the mobile app
+
 With the environment variables set, prepare the database with the commands below
 
 ```bash
@@ -100,8 +102,6 @@ yarn install
 
 Edit the file src\services\api.js and change the baseURL to match your server url
 
-Note: If your server is running on localhost, use the machine IP, if you use "localhost" as the url, maybe the images won't load in the app
-
 ```bash
 const api = axios.create({
     baseURL: "http://192.168.1.0:3333",
@@ -111,6 +111,6 @@ const api = axios.create({
 Then connect your device or emulator and start the server 
 
 ```bash
-yarn start
+react-native run-android
 ```
 
